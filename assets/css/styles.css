@@ -3,7 +3,7 @@
     --base-font: 1.6rem;
     --fw-normal: 400;
     --fw-bold: 700;
-    --img-bg: url("../assets/images/mil.png");
+    --img-bg: url("../images/mil.png");
     --clr-primary: hsl(0, 0%, 98%);
     --clr-white: hsl(0, 0%, 100%);
     --clr-page-bg: hsl(235, 21%, 11%);
@@ -23,7 +23,7 @@
   /* CHANGE CUSTOM PROPERTIES WHEN LIGHT THEME */
   
   body.light {
-    --img-bg: url("../assets/images/fog.png");
+    --img-bg: url("../images/fog.png");
     --clr-primary: hsl(243, 12%, 30%);
     --clr-page-bg: hsl(0, 0%, 98%);
     --clr-card-bg: hsl(0, 0%, 100%);
@@ -154,7 +154,7 @@
   /* CHECKED CARD */
   
   .card .cb-container .cb-input:checked + .check {
-    background: url("../assets/images/icon-check.svg"),
+    background: url("../images/icon-check.svg"),
       linear-gradient(45deg, var(--clr-green), var(--clr-pink));
     background-repeat: no-repeat;
     background-position: center;
