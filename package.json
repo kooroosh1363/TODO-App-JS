@@ -1,0 +1,10 @@
+{
+  "name": "focusqueue-offline-task-engine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check assets/js/scripts.js && node --check assets/js/task-store.js && node --check assets/js/persistence.js && npm test"
+  }
+}

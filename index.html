@@ -1,80 +1,133 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TODO APP WITH JS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap" rel="stylesheet">
+  <meta
+    name="description"
+    content="FocusQueue is an offline-first vanilla JavaScript task manager with filtering, priorities, accessible reordering, persistent theme, and versioned local state."
+  />
+  <meta name="color-scheme" content="light dark" />
+  <title>FocusQueue — Offline Task State Engine</title>
   <link rel="stylesheet" href="./assets/css/styles.css" />
-  <link rel="preload" href="./assets/images/icon-check.svg" as="image" type="image/svg+xml" crossorigin="anonymous">
 </head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to task workspace</a>
 
-<body >
-  <header class="card">
-    <h1> List of Tasks : </h1>
-    
-    <button id="theme-switcher">
-      <img src="./assets/images/icon-sun.svg" alt="Change color theme" />
-    </button>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Vanilla JavaScript · Offline-first</p>
+      <h1>FocusQueue</h1>
+      <p class="subtitle">A small task manager built around explicit state, persistence, and predictable interactions.</p>
+    </div>
+
+    <label class="theme-control">
+      <span>Theme</span>
+      <select id="theme-select" aria-label="Theme preference">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </label>
   </header>
-  <main>
-    <div class="card add">
-      <div class="cb-container">
-        <button id="add-btn">+</button>
-      </div>
-      <div class="txt-container">
-        <label for="addt">ADD : </label>
-        <input type="text" class="txt-input" placeholder=" Add New Tasks..." spellcheck="false" autocomplete="off"
-          id="addt" dir="rtl" />
-      </div>
-    </div>
-    <ul class="todos">
 
-      <li class="card" draggable="true">
-        <div class="cb-container">
-          <input type="checkbox" class="cb-input" />
-          <span class="check"></span>
+  <main id="workspace" class="workspace">
+    <section class="composer" aria-labelledby="composer-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Capture</p>
+          <h2 id="composer-title">Add a task</h2>
         </div>
-        <p class="item"> Learning Java Script</p>
-        <button class="clear">
-          <img src="./assets/images/icon-cross.svg" alt="Clear it" />
-        </button>
-      </li>
+        <p>Tasks are stored locally in this browser. No account or network request is required.</p>
+      </div>
 
+      <form id="task-form" class="task-form">
+        <label class="field field-grow">
+          <span>Task title</span>
+          <input
+            id="task-title"
+            name="title"
+            type="text"
+            maxlength="120"
+            autocomplete="off"
+            placeholder="e.g. Review API retry policy"
+          />
+        </label>
 
-      
-      <li class="card" >
-        <div class="cb-container">
-          <input type="checkbox" class="cb-input" />
-          <span class="check"></span>
+        <label class="field">
+          <span>Priority</span>
+          <select id="task-priority" name="priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+
+        <button class="primary-button" type="submit">Add task</button>
+      </form>
+    </section>
+
+    <section class="controls" aria-labelledby="controls-title">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">Refine</p>
+          <h2 id="controls-title">Find the next task</h2>
         </div>
-        <p class="item">Learning Nodejs</p>
-        <button class="clear">
-          <img src="./assets/images/icon-cross.svg" alt="Clear it" />
-        </button>
-      </li>
-      
-    </ul>
-    <div class="card stat">
-      <p class="corner"><span id="items-left">0</span>  The Remaining Item</p>
-      <div class="filter">
-        <button id="all" class="on">All</button>
-        <button id="active" >Active</button>
-        <button id="completed">Complete</button>
+        <div class="stats" aria-label="Task statistics">
+          <span><strong id="active-count">0</strong> active</span>
+          <span><strong id="completed-count">0</strong> completed</span>
+          <span><strong id="total-count">0</strong> total</span>
+        </div>
       </div>
-      <div class="corner">
-        <button id="clear-completed">  Delete completed ones</button>
+
+      <div class="control-grid">
+        <label class="field">
+          <span>Search</span>
+          <input id="task-search" type="search" placeholder="Search task titles" />
+        </label>
+
+        <label class="field">
+          <span>Priority</span>
+          <select id="priority-filter">
+            <option value="all">All priorities</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+
+        <div class="filter-group" aria-label="Task status filters">
+          <button type="button" data-filter="all" aria-pressed="true" class="is-active">All</button>
+          <button type="button" data-filter="active" aria-pressed="false">Active</button>
+          <button type="button" data-filter="completed" aria-pressed="false">Completed</button>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="task-section" aria-labelledby="tasks-title">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">Queue</p>
+          <h2 id="tasks-title">Tasks</h2>
+        </div>
+        <button id="clear-completed" class="secondary-button" type="button">Clear completed</button>
+      </div>
+
+      <ul id="task-list" class="task-list"></ul>
+
+      <div id="empty-state" class="empty-state" hidden>
+        <strong>No tasks match this view.</strong>
+        <p>Add a task or adjust the current filters.</p>
+      </div>
+    </section>
   </main>
-  <footer>
-    <p>  Drag And Drop</p>
-  </footer>
-  <script src="./assets/js/scripts.js"></script>
-</body>
 
+  <p id="status-region" class="sr-only" aria-live="polite"></p>
+
+  <footer>
+    <p>FocusQueue · local-first task state demo · no backend</p>
+  </footer>
+
+  <script type="module" src="./assets/js/scripts.js"></script>
+</body>
 </html>
